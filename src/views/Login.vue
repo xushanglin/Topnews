@@ -7,7 +7,7 @@
       <span class="iconfont iconnew"></span>
     </div>
     <div class="inputWrapper">
-      <input type="text" />
+      <input type="text" placeholder="用户名 / 手机号码" />
     </div>
     <div class="inputWrapper">
       <input type="text" />
