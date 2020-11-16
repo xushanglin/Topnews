@@ -1,43 +1,67 @@
 <template>
-  <div>
-    <h1>这是一个登录页面</h1>
-    <!-- 主动给子组件发送数据 用:属性方式从data数据里面读取数据 -->
-    <!-- <Myinput :title="msg" /> -->
-    <!-- <Myinput :title="passWord" /> -->
-    <!-- <Myinput :title="nickName" /> -->
-    <!-- 第二种直接赋值 -->
-    <Myinput title="请输入用户名" @infoMsg="infoMsg" />
-    <Myinput title="请输入密码" @infoMsg="infoMsg" />
-    <Myinput title="请输入昵称" @infoMsg="infoMsg" />
-    <Logo />
+  <div class="container">
+    <div class="btnClose">
+      <span class="iconfont iconicon-test"></span>
+    </div>
+    <div class="logo">
+      <span class="iconfont iconnew"></span>
+    </div>
+    <div class="inputWrapper">
+      <input type="text" />
+    </div>
+    <div class="inputWrapper">
+      <input type="text" />
+    </div>
+    <div class="btnSubmit">
+      <button>登录</button>
+    </div>
   </div>
 </template>
 
 <script>
-// 导入组件
-import Logo from "../components/Logo";
-// 导入子组件,Myinput为自定义组件名称, from为导入组件的路径
-import Myinput from "../components/MyInputComponent";
-export default {
-  data() {
-    return {
-      msg: "请输入用户名",
-      passWord: "请输入密码",
-      nickName: "请输入昵称",
-    };
-  },
-  components: {
-    Logo,
-    Myinput,
-  },
-  methods: {
-    infoMsg(msg) {
-      // msg为子组件传过来的参数
-      console.log(msg);
-    },
-  },
-};
+export default {};
 </script>
 
-<style>
+<style lang="less" scoped>
+.container {
+  padding: 24/360 * 100vw;
+}
+.btnClose {
+  .iconfont {
+    font-size: 28/360 * 100vw;
+  }
+}
+.logo {
+  text-align: center;
+  .iconfont {
+    font-size: 126/360 * 100vw;
+    color: #d81e06;
+  }
+}
+.inputWrapper {
+  padding-bottom: 16/360 * 100vw;
+  input {
+    width: 100%;
+    height: 48/360 * 100vw;
+    line-height: 48/360 * 100vw;
+    font-size: 18/360 * 100vw;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #333;
+  }
+}
+.btnSubmit {
+  padding-top: 26/360 * 100vw;
+  button {
+    width: 100%;
+    // height: 48/360*100vw;
+    line-height: 48/360 * 100vw;
+    font-size: 18 /360 * 100vw;
+    background: #cc3300;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 24/360 * 100vw;
+  }
+}
 </style>
