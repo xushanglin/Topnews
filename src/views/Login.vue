@@ -56,7 +56,7 @@ export default {};
     width: 100%;
     // height: 48/360*100vw;
     line-height: 48/360 * 100vw;
-    font-size: 18 /360 * 100vw;
+    font-size: 18/360 * 100vw;
     background: #cc3300;
     color: white;
     border: none;
