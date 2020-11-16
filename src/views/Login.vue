@@ -6,9 +6,9 @@
     <!-- <Myinput :title="passWord" /> -->
     <!-- <Myinput :title="nickName" /> -->
     <!-- 第二种直接赋值 -->
-    <Myinput title="请输入用户名" />
-    <Myinput title="请输入密码" />
-    <Myinput title="请输入昵称" />
+    <Myinput title="请输入用户名" @infoMsg="infoMsg" />
+    <Myinput title="请输入密码" @infoMsg="infoMsg" />
+    <Myinput title="请输入昵称" @infoMsg="infoMsg" />
     <Logo />
   </div>
 </template>
@@ -29,6 +29,12 @@ export default {
   components: {
     Logo,
     Myinput,
+  },
+  methods: {
+    infoMsg(msg) {
+      // msg为子组件传过来的参数
+      console.log(msg);
+    },
   },
 };
 </script>
