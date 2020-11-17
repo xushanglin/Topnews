@@ -22,17 +22,18 @@
       :rule="/^\d{6,12}$/"
     />
 
-    <div class="btnSubmit">
-      <button>登录</button>
-    </div>
+    <!-- 登录按钮 -->
+    <VuthBtn btnText="登录" />
   </div>
 </template>
 
 <script>
-import Vuthinput from "../components/vuthInput";
+import Vuthinput from "../components/VuthInput";
+import VuthBtn from "../components/VuthBtn";
 export default {
   components: {
     Vuthinput,
+    VuthBtn,
   },
 };
 </script>
@@ -52,21 +53,6 @@ export default {
   .iconfont {
     font-size: 126/360 * 100vw;
     color: #8995ad;
-  }
-}
-
-.btnSubmit {
-  padding-top: 26/360 * 100vw;
-  button {
-    width: 100%;
-    // height: 48/360*100vw;
-    line-height: 48/360 * 100vw;
-    font-size: 18px;
-    background: #8995ad;
-    color: white;
-    border: none;
-    outline: none;
-    border-radius: 24/360 * 100vw;
   }
 }
 </style>
