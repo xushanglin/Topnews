@@ -36,7 +36,7 @@ export default {
   methods: {
     showErrTip() {
       if (!this.isOk) {
-        alert(this.errMsg);
+        this.$toast.fail(this.errMsg);
       }
     },
   },

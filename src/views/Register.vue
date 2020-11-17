@@ -8,7 +8,12 @@
       <span class="iconfont iconnew"></span>
     </div>
 
-    <VuthInput type="text" title="请输入昵称" :rule="/^.{6}$/" />
+    <VuthInput
+      type="text"
+      title="请输入昵称"
+      errMsg="不合法昵称"
+      :rule="/^.{6}$/"
+    />
     <VuthInput
       type="text"
       title="请输入用户名/手机号"
