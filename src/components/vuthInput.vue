@@ -1,6 +1,13 @@
 <template>
   <div class="inputWrapper">
-    <input :type="type" :placeholder="title" v-model="inputValue" />
+    <input
+      :type="type"
+      :placeholder="title"
+      v-model="inputValue"
+      :class="{
+        error: !isOk,
+      }"
+    />
   </div>
 </template>
 
@@ -44,6 +51,12 @@ export default {
     background-color: #e9ebec;
     // border-bottom: 1px solid #ccc;
     color: #ccc;
+  }
+  // .succes {
+  //   box-shadow: 0px 0px 10px 0px #54f737;
+  // }
+  .error {
+    box-shadow: 0px 0px 10px 0px #f58f7d;
   }
 }
 </style>
