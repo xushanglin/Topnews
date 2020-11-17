@@ -1,6 +1,7 @@
 <template>
   <div class="inputWrapper">
     <input
+      @blur="showErrTip"
       :type="type"
       :placeholder="title"
       v-model="inputValue"
@@ -29,6 +30,13 @@ export default {
       } else {
         this.isOk = false;
         console.log(this.errMsg);
+      }
+    },
+  },
+  methods: {
+    showErrTip() {
+      if (!this.isOk) {
+        alert(this.errMsg);
       }
     },
   },
