@@ -9,24 +9,27 @@
     </div>
 
     <VuthInput
+      @sendValue="getNickname"
       type="text"
       title="请输入昵称"
       errMsg="不合法昵称"
       :rule="/^.{6}$/"
     />
     <VuthInput
+      @sendValue="getname"
       type="text"
       title="请输入用户名/手机号"
       errMsg="请输入6位账号"
       :rule="/^.{6}$/"
     />
     <VuthInput
+      @sendValue="getpwd"
       type="password"
       title="请输入密码"
       errMsg="请输入6到12位密码"
       :rule="/^\d{6,12}$/"
     />
-    <VuthBtn btnText="注册" />
+    <VuthBtn btnText="注册" @clicked="register" />
   </div>
 </template>
 
@@ -34,6 +37,45 @@
 import VuthInput from "../components/VuthInput";
 import VuthBtn from "../components/VuthBtn";
 export default {
+  data() {
+    return {
+      nickname: "",
+      username: "",
+      password: "",
+    };
+  },
+  methods: {
+    // 接收子组件传过来的账号
+    getname(msg) {
+      this.username = msg;
+    },
+    getpwd(msg) {
+      this.password = msg;
+    },
+    getNickname(msg) {
+      this.nickname = msg;
+    },
+    // 注册事件
+    register() {
+      this.$axios({
+        method: "post",
+        url: "http://157.122.54.189:9083/register",
+        data: {
+          username: this.username,
+          password: this.password,
+          nickname: this.nickname,
+        },
+      }).then((res) => {
+        // console.log(res);
+        if (res.data.statusCode === 401) {
+          this.$toast.fail(res.data.message);
+        } else {
+          this.$toast.fail(res.data.message);
+          window.location.href = "#/login";
+        }
+      });
+    },
+  },
   components: {
     VuthInput,
     VuthBtn,

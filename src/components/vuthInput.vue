@@ -5,9 +5,6 @@
       :type="type"
       :placeholder="title"
       v-model="inputValue"
-      :class="{
-        error: !isOk,
-      }"
     />
   </div>
 </template>
@@ -29,13 +26,15 @@ export default {
         this.isOk = true;
       } else {
         this.isOk = false;
-        console.log(this.errMsg);
+        // console.log(this.errMsg);
       }
     },
   },
   methods: {
     showErrTip() {
+      this.$emit("sendValue", this.inputValue);
       if (!this.isOk) {
+        // 组件提示错误信息
         this.$toast.fail(this.errMsg);
       }
     },
@@ -63,8 +62,8 @@ export default {
   // .succes {
   //   box-shadow: 0px 0px 10px 0px #54f737;
   // }
-  .error {
-    box-shadow: 0px 0px 10px 0px #f58f7d;
-  }
+  // .error {
+  //   box-shadow: 0px 0px 10px 0px #f58f7d;
+  // }
 }
 </style>
