@@ -6,6 +6,12 @@ import router from './router'
 import Vant from 'vant'
 // 组件库css文件
 import 'vant/lib/index.css'
+
+// 导入axios组件库
+import axios from 'axios'
+// 绑定到原型
+Vue.prototype.$axios = axios;
+
 Vue.config.productionTip = false
 
 new Vue({
