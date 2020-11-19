@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     showErrTip() {
-      this.$emit("sendValue", this.inputValue);
+      this.$emit("sendValue", this.inputValue, this.isOk);
       if (!this.isOk) {
         // 组件提示错误信息
         this.$toast.fail(this.errMsg);
