@@ -9,19 +9,19 @@
     </div>
     <!-- 添加验证规则 -->
     <Vuthinput
-      @sendValue="getname"
+      @sendValue="getname(arguments)"
       type="text"
       title="请输入用户名/手机号"
       errMsg="请输入6位账号"
-      :rule="/^.{5,10}$/"
+      :rule="/^.{5,12}$/"
     />
 
     <Vuthinput
-      @sendValue="getpwd"
+      @sendValue="getpwd(arguments)"
       type="password"
       title="请输入密码"
       errMsg="请输入6到12位密码"
-      :rule="/^\d{6,12}$/"
+      :rule="/^\d{1,12}$/"
     />
 
     <!-- 登录按钮 -->
@@ -37,34 +37,48 @@ export default {
     return {
       username: "",
       password: "",
+      nameStatus: "",
+      pwdStatus: "",
     };
   },
   methods: {
-    getname(msg) {
-      this.username = msg;
-      // console.log(this.username);
+    getname(e) {
+      this.username = e[0];
+      // console.log(e[0], e[1]);
+      this.nameStatus = e[1];
     },
-    getpwd(msg) {
-      this.password = msg;
+    getpwd(e) {
+      this.password = e[0];
+      this.pwdStatus = e[1];
       // console.log(this.password);
     },
     getLogin() {
       // console.log(msg);
-      this.$axios({
-        url: "http://157.122.54.189:9083/login",
-        method: "POST",
-        data: {
-          username: this.username,
-          password: this.password,
-        },
-      }).then((res) => {
-        console.log(res);
-        if (res.data.statusCode === 401) {
-          this.$toast.fail(res.data.message);
-        } else {
-          this.$toast.fail(res.data.message);
-        }
-      });
+      if (this.nameStatus === true && this.pwdStatus === true) {
+        this.$axios({
+          url: "http://157.122.54.189:9083/login",
+          method: "POST",
+          data: {
+            username: this.username,
+            password: this.password,
+          },
+        }).then((res) => {
+          console.log(res);
+          if (res.data.statusCode === 401) {
+            this.$toast.fail(res.data.message);
+          } else {
+            // 数据都在 res.data 里面
+            const { message, data } = res.data;
+            // 这里登陆成功, 除了弹窗, 现在还需要记录 token 和用户 id
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("userId", data.user.id);
+            this.$toast.success(res.data.message);
+            window.location.href = "#/user";
+          }
+        });
+      } else {
+        this.$toast.fail("输入正确的账号或密码");
+      }
     },
   },
   components: {
