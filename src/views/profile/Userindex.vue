@@ -22,6 +22,7 @@
     <Bartype title="我的跟帖" msg="跟帖/回复" />
     <Bartype title="我的收藏" msg="文章/视频" />
     <Bartype title="设置" />
+    <Bartype title="退出" @click.native="logOut" />
   </div>
 </template>
 
@@ -42,6 +43,13 @@ export default {
   methods: {
     getGz() {
       window.location.href = "#/attention";
+    },
+    // 退出登录，清空本地token和id
+    logOut() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      // 跳转到登录页
+      this.$router.push("/login");
     },
   },
   mounted() {
