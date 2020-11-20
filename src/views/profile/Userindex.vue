@@ -49,7 +49,7 @@ export default {
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       // 跳转到登录页
-      this.$router.push("/login");
+      this.$router.replace("/login");
     },
   },
   mounted() {
