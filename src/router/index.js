@@ -4,10 +4,10 @@ import Home from '../views/Home.vue'
 
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
-import User from '../views/Userindex.vue'
-import Attention from '../views/attention.vue'
-import followUp from '../views/follow-up.vue'
-import Edituser from '../views/Edituser.vue'
+import User from '../views/profile/Userindex.vue'
+import Attention from '../views/profile/attention.vue'
+import followUp from '../views/profile/follow-up.vue'
+import Edituser from '../views/profile/Edituser.vue'
 Vue.use(VueRouter)
 
 const routes = [{

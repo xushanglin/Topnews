@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import Bartype from "../components/Bar-Type";
+import Bartype from "@/components/Bar-Type";
 export default {
   components: {
     Bartype,

@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import gzliebiao from "../components/gzliebiao";
-import Header from "../components/Header";
+import gzliebiao from "@/components/gzliebiao";
+import Header from "@/components/Header";
 export default {
   data() {
     return {
