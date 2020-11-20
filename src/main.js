@@ -12,8 +12,10 @@ import axios from 'axios'
 // 绑定到原型
 Vue.prototype.$axios = axios;
 
-Vue.config.productionTip = false
+import Uploader from "vant";
+Vue.use(Uploader);
 
+Vue.config.productionTip = false
 new Vue({
   router,
   render: function (h) {
