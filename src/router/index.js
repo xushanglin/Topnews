@@ -5,9 +5,10 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import User from '../views/profile/Userindex.vue'
-import Attention from '../views/profile/attention.vue'
-import followUp from '../views/profile/follow-up.vue'
+import Follow from '../views/profile/follow.vue'
+import Comments from '../views/profile/comments.vue'
 import Edituser from '../views/profile/Edituser.vue'
+import UserStar from '../views/profile/userStar.vue'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -27,16 +28,20 @@ const routes = [{
     component: User
   },
   {
-    path: "/attention",
-    component: Attention
+    path: "/follow",
+    component: Follow
   },
   {
-    path: "/followup",
-    component: followUp
+    path: "/comments",
+    component: Comments
   },
   {
     path: "/edituser",
     component: Edituser
+  },
+  {
+    path: "/userstar",
+    component: UserStar
   }
 ]
 

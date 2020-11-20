@@ -13,21 +13,21 @@
       type="text"
       title="请输入昵称"
       errMsg="不合法昵称"
-      :rule="/^.{6}$/"
+      :rule="/^.{1,6}$/"
     />
     <VuthInput
       @sendValue="getname"
       type="text"
       title="请输入用户名/手机号"
       errMsg="请输入6位账号"
-      :rule="/^.{6}$/"
+      :rule="/^.{5,12}$/"
     />
     <VuthInput
       @sendValue="getpwd"
       type="password"
       title="请输入密码"
       errMsg="请输入6到12位密码"
-      :rule="/^\d{6,12}$/"
+      :rule="/^\d{3,12}$/"
     />
     <VuthBtn btnText="注册" @clicked="register" />
   </div>
