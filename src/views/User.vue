@@ -51,10 +51,16 @@ export default {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     }).then((res) => {
-      const { data } = res.data;
-      this.src = data.head_img;
-      this.nickname = data.nickname;
-      //   console.log(data);
+      if (res.data.statusCode === 401) {
+        this.$toast.fail(res.data.message);
+        window.location.href = "#/login";
+
+        //   console.log(data);
+      } else {
+        const { data } = res.data;
+        this.src = data.head_img;
+        this.nickname = data.nickname;
+      }
     });
   },
 };
@@ -63,7 +69,8 @@ export default {
 <style lang="less" scoped>
 .content {
   background-color: #f2f2f2;
-  height: 635/360 * 100vw;
+  // height: 635/360 * 100vw;
+  min-height: 100vh;
   .user {
     padding: 35/360 * 100vw 30/360 * 100vw;
     display: flex;
@@ -73,10 +80,13 @@ export default {
     .user-logo {
       width: 70/360 * 100vw;
       height: 70/360 * 100vw;
+      border-radius: 50%;
+      overflow: hidden;
       img {
-        display: block;
+        // display: block;
         width: 100%;
         border-radius: 50%;
+        transform: scale(1.3);
       }
     }
     .message {
