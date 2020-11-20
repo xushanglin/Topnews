@@ -4,11 +4,14 @@ import Home from '../views/Home.vue'
 
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import User from '../views/Userindex.vue'
+import Attention from '../views/attention.vue'
+import followUp from '../views/follow-up.vue'
+import Edituser from '../views/Edituser.vue'
 Vue.use(VueRouter)
 
 const routes = [{
     path: '/',
-    name: 'Home',
     component: Home
   },
   {
@@ -18,6 +21,22 @@ const routes = [{
   {
     path: "/register",
     component: Register
+  },
+  {
+    path: "/userindex",
+    component: User
+  },
+  {
+    path: "/attention",
+    component: Attention
+  },
+  {
+    path: "/followup",
+    component: followUp
+  },
+  {
+    path: "/edituser",
+    component: Edituser
   }
 ]
 
