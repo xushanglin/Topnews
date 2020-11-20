@@ -73,7 +73,7 @@ export default {
             localStorage.setItem("token", data.token);
             localStorage.setItem("userId", data.user.id);
             this.$toast.success(res.data.message);
-            window.location.href = "#/user";
+            window.location.href = "#/userindex";
           }
         });
       } else {
