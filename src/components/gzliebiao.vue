@@ -17,7 +17,6 @@ export default {
 
 <style lang="less" scoped>
 .link {
-  margin-top: 20/360 * 100vw;
   padding: 30/360 * 100vw;
   border-bottom: 1/360 * 100vw solid #ccc;
   display: flex;
