@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <Header text="我的关注" />
+    <Header @click="getOut" text="我的关注" />
     <div v-for="item in content" :key="item">
       <gzliebiao :msg="item" />
     </div>
@@ -19,6 +19,11 @@ export default {
   components: {
     gzliebiao,
     Header,
+  },
+  methods: {
+    getOut() {
+      this.$router.push("/userindex");
+    },
   },
   mounted() {
     this.$axios({

@@ -1,5 +1,8 @@
 <template>
-  <header><span class="iconfont iconjiantou2"></span>{{ text }}</header>
+  <header>
+    <span @click="$emit('click')" class="iconfont iconjiantou2"></span
+    >{{ text }}
+  </header>
 </template>
 
 <script>
