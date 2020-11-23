@@ -65,15 +65,12 @@ export default {
   },
   mounted() {
     this.$axios({
-      url: `http://157.122.54.189:9083/user/${this.userid}`,
+      url: `/user/${this.userid}`,
       //   params: {
       //     id: this.userid,
       //   },
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
     }).then((res) => {
-      const { data } = res.data;
+      const { message, data } = res.data;
       if (message == "获取成功") {
         this.src = data.head_img;
         this.nickname = data.nickname;

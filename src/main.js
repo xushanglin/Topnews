@@ -6,6 +6,12 @@ import router from './router'
 import Vant, {
   Toast
 } from 'vant'
+import {
+  Tab,
+  Tabs
+} from 'vant';
+Vue.use(Tab);
+Vue.use(Tabs);
 // 组件库css文件
 import 'vant/lib/index.css'
 
@@ -14,7 +20,19 @@ import axios from 'axios'
 // 服务器基准路径
 axios.defaults.baseURL = "http://157.122.54.189:9083"
 
-// 拦截器
+// 请求拦截器
+axios.interceptors.request.use(config => {
+  // Do something before request is sent
+  console.log(config);
+  // 判断请求头没有有token,并且本地有token的话给请求头添加
+  if (!config.headers.Authorization && localStorage.getItem('token')) {
+    config.headers.Authorization = localStorage.getItem('token')
+  }
+  return config;
+});
+
+
+// 拦截器响应
 // 做错误逻辑的判断
 axios.interceptors.response.use(res => {
   // Do something before response is sent
