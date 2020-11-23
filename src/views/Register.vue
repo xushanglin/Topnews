@@ -59,7 +59,7 @@ export default {
     register() {
       this.$axios({
         method: "post",
-        url: "http://157.122.54.189:9083/register",
+        url: "/register",
         data: {
           username: this.username,
           password: this.password,
@@ -67,9 +67,7 @@ export default {
         },
       }).then((res) => {
         // console.log(res);
-        if (res.data.statusCode === 401) {
-          this.$toast.fail(res.data.message);
-        } else {
+        if (res.data.message === "注册成功") {
           this.$toast.fail(res.data.message);
           window.location.href = "#/login";
         }

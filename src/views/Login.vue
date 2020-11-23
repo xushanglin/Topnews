@@ -54,6 +54,7 @@ export default {
     },
     getLogin() {
       // console.log(msg);
+      // 的判断正则表达式是否正确，否则禁止登录
       if (this.nameStatus === true && this.pwdStatus === true) {
         this.$axios({
           url: "http://157.122.54.189:9083/login",
@@ -64,9 +65,7 @@ export default {
           },
         }).then((res) => {
           console.log(res);
-          if (res.data.statusCode === 401) {
-            this.$toast.fail(res.data.message);
-          } else {
+          if (res.data.message === "登录成功") {
             // 数据都在 res.data 里面
             const { message, data } = res.data;
             // 这里登陆成功, 除了弹窗, 现在还需要记录 token 和用户 id

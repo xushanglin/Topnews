@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <div class="user">
+    <div class="user" @click="goEdit">
       <div class="user-logo">
         <img v-if="src" :src="'http://157.122.54.189:9083' + src" />
         <img v-else src="@/assets/logo.png" alt="" />
@@ -19,8 +19,8 @@
     </div>
     <!-- 条形框 -->
     <Bartype title="我的关注" msg="关注的用户" @click.native="getGz" />
-    <Bartype title="我的跟帖" msg="跟帖/回复" />
-    <Bartype title="我的收藏" msg="文章/视频" />
+    <Bartype title="我的跟帖" msg="跟帖/回复" @click.native="getComments" />
+    <Bartype title="我的收藏" msg="文章/视频" @click.native="getStar" />
     <Bartype title="设置" />
     <Bartype title="退出" @click.native="logOut" />
   </div>
@@ -42,14 +42,25 @@ export default {
   },
   methods: {
     getGz() {
-      window.location.href = "#/attention";
+      window.location.href = "#/follow";
     },
     // 退出登录，清空本地token和id
     logOut() {
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
+      this.$toast.success("退出成功");
       // 跳转到登录页
       this.$router.replace("/login");
+    },
+    // 评论
+    getComments() {
+      window.location.href = "#/comments";
+    },
+    getStar() {
+      window.location.href = "#/userstar";
+    },
+    goEdit() {
+      window.location.href = "#/edituser";
     },
   },
   mounted() {
@@ -62,17 +73,11 @@ export default {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     }).then((res) => {
-      if (res.data.statusCode === 401) {
-        this.$toast.fail(res.data.message);
-        window.location.href = "#/login";
-
-        //   console.log(data);
-      } else {
-        const { data } = res.data;
+      const { data } = res.data;
+      if (message == "获取成功") {
         this.src = data.head_img;
         this.nickname = data.nickname;
         this.gender = data.gender;
-        // console.log(data);
       }
     });
   },
