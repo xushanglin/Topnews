@@ -25,23 +25,38 @@ const routes = [{
   },
   {
     path: "/userindex",
-    component: User
+    component: User,
+    meta: {
+      needAuth
+    }
   },
   {
     path: "/follow",
-    component: Follow
+    component: Follow,
+    meta: {
+      needAuth
+    }
   },
   {
     path: "/comments",
-    component: Comments
+    component: Comments,
+    meta: {
+      needAuth
+    }
   },
   {
     path: "/edituser",
-    component: Edituser
+    component: Edituser,
+    meta: {
+      needAuth
+    }
   },
   {
     path: "/userstar",
-    component: UserStar
+    component: UserStar,
+    meta: {
+      needAuth
+    }
   }
 ]
 
@@ -53,16 +68,30 @@ const router = new VueRouter({
 // 拦截所有跳转，执行回调函数
 router.beforeEach((to, from, next) => {
   // 如果跳转到个人中心页面
-  if (to.path == "/userindex") {
-    // 判断有无token再放行
+  // 路由优化
+  // 验证配置meta中需不需要验证token
+  if (to.meta.needAuth) {
+    // 判断localStorage是否存在token
     if (localStorage.getItem('token')) {
-      // 则执行next()
+      // 有则放行
       return next()
     } else {
       // 否则就跳转到登录页面
-      return router.push("/login")
+      return router.push("/login").catch(err => {})
     }
   }
+
+
+  // if (to.path == "/userindex" || to.path == "/edituser" || to.path == "/follow") {
+  //   // 判断有无token再放行
+  //   if (localStorage.getItem('token')) {
+  //     // 则执行next()
+  //     return next()
+  //   } else {
+  //     // 否则就跳转到登录页面
+  //     return router.push("/login").catch(err => {})
+  //   }
+  // }
   return next()
 })
 export default router
