@@ -21,7 +21,9 @@
         <img :src="post.cover[1].url | fixImgUrl" alt="" />
         <img :src="post.cover[2].url | fixImgUrl" alt="" />
       </div>
-      <div class="info">{{ post.user.nickname }} {{ post.comment_length }}</div>
+      <div class="info">
+        {{ post.user.nickname }} {{ post.comment_length }}跟帖
+      </div>
     </div>
     <!-- 显示视频 -->
     <div class="video" v-if="post.type == 2 && post.cover.length >= 1">
@@ -30,7 +32,9 @@
         <img :src="post.cover[0].url | fixImgUrl" alt="" />
         <span class="iconfont iconshipin"></span>
       </div>
-      <div class="info">{{ post.user.nickname }} {{ post.comment_length }}</div>
+      <div class="info">
+        {{ post.user.nickname }} {{ post.comment_length }}跟帖
+      </div>
     </div>
   </div>
 </template>
