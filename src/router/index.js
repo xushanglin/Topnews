@@ -10,6 +10,7 @@ import Comments from '../views/profile/comments.vue'
 import Edituser from '../views/profile/Edituser.vue'
 import UserStar from '../views/profile/userStar.vue'
 import Test from '../views/Test.vue'
+import Details from '../views/profile/details.vue'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -62,6 +63,10 @@ const routes = [{
   {
     path: "/test",
     component: Test
+  },
+  {
+    path: "/details",
+    component: Details
   }
 ]
 
