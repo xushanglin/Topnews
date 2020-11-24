@@ -10,21 +10,6 @@ export default {
   methods: {
     getLogin() {
       this.$emit("clicked");
-      //     this.$axios({
-      //       url: "http://157.122.54.189:9083/login",
-      //       method: "POST",
-      //       data: {
-      //         username: this.push_name,
-      //         password: this.push_pwd,
-      //       },
-      //     }).then((res) => {
-      //       console.log(res);
-      //       if (res.data.statusCode === 401) {
-      //         this.$toast.fail(res.data.message);
-      //       } else {
-      //         this.$toast.fail(res.data.message);
-      //       }
-      //     });
     },
   },
 };

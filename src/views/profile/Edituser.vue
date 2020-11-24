@@ -26,8 +26,6 @@
     />
     <bartype title="性别" v-else msg="女" @click.native="showgen = !showgen" />
 
-    <!-- 修改按钮 -->
-    <button @click="userupdate" class="submit">修改</button>
     <!-- 第三方弹窗组件 -->
     <van-dialog
       v-model="showname"

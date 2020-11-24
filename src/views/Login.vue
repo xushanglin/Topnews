@@ -57,7 +57,7 @@ export default {
       // 的判断正则表达式是否正确，否则禁止登录
       if (this.nameStatus === true && this.pwdStatus === true) {
         this.$axios({
-          url: "http://157.122.54.189:9083/login",
+          url: "/login",
           method: "POST",
           data: {
             username: this.username,
