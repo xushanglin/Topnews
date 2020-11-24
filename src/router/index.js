@@ -27,35 +27,35 @@ const routes = [{
     path: "/userindex",
     component: User,
     meta: {
-      needAuth
+      needAuth: true
     }
   },
   {
     path: "/follow",
     component: Follow,
     meta: {
-      needAuth
+      needAuth: true
     }
   },
   {
     path: "/comments",
     component: Comments,
     meta: {
-      needAuth
+      needAuth: true
     }
   },
   {
     path: "/edituser",
     component: Edituser,
     meta: {
-      needAuth
+      needAuth: true
     }
   },
   {
     path: "/userstar",
     component: UserStar,
     meta: {
-      needAuth
+      needAuth: true
     }
   }
 ]
