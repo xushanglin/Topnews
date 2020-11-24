@@ -11,15 +11,15 @@
           {{ post.user.nickname }} {{ post.comment_length }}跟帖
         </div>
       </div>
-      <img class="right" :src="post.cover[0].url" />
+      <img class="right" :src="post.cover[0].url | fixImgUrl" />
     </div>
     <!-- 多张图片 -->
     <div class="multiimg" v-if="post.type == 1 && post.cover.length >= 3">
       <div class="title">{{ post.title }}</div>
       <div class="cover">
-        <img :src="post.cover[0].url" alt="" />
-        <img :src="post.cover[1].url" alt="" />
-        <img :src="post.cover[2].url" alt="" />
+        <img :src="post.cover[0].url | fixImgUrl" alt="" />
+        <img :src="post.cover[1].url | fixImgUrl" alt="" />
+        <img :src="post.cover[2].url | fixImgUrl" alt="" />
       </div>
       <div class="info">{{ post.user.nickname }} {{ post.comment_length }}</div>
     </div>
@@ -27,12 +27,10 @@
     <div class="video" v-if="post.type == 2 && post.cover.length >= 1">
       <div class="title">{{ post.title }}</div>
       <div class="cover">
-        <img :src="post.cover[0].url" alt="" />
+        <img :src="post.cover[0].url | fixImgUrl" alt="" />
         <span class="iconfont iconshipin"></span>
       </div>
-      <div class="info">
-        {{ post.user.nickname }} {{ post.comment_length }}}
-      </div>
+      <div class="info">{{ post.user.nickname }} {{ post.comment_length }}</div>
     </div>
   </div>
 </template>
@@ -107,6 +105,7 @@ export default {
     align-items: center;
     justify-content: center;
     img {
+      margin: 10/360 * 100vw;
       width: 340/360 * 100vw;
       height: 170/360 * 100vw;
       object-fit: cover;
