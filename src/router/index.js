@@ -9,6 +9,7 @@ import Follow from '../views/profile/follow.vue'
 import Comments from '../views/profile/comments.vue'
 import Edituser from '../views/profile/Edituser.vue'
 import UserStar from '../views/profile/userStar.vue'
+import Test from '../views/Test.vue'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -57,6 +58,10 @@ const routes = [{
     meta: {
       needAuth: true
     }
+  },
+  {
+    path: "/test",
+    component: Test
   }
 ]
 
