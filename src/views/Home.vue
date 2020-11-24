@@ -3,19 +3,14 @@
     <!-- 头部导航栏 -->
     <Homeheader />
     <!-- 栏目管理 -->
-    <van-tabs
-      v-model="active"
-      swipeable
-      background="#e4e4e4"
-      @click="setSelect"
-    >
+    <van-tabs v-model="active" background="#e4e4e4" @click="setSelect">
       <van-tab
         v-for="(item, index) in content"
         :title="item.name"
         :name="item.id"
         :key="index"
       >
-        内容 {{ item.name }}
+        <Postlist v-for="post in Postlist" :key="post.id" :post="post" />
       </van-tab>
       <span class="iconfont iconjiantou1"></span>
     </van-tabs>
@@ -24,14 +19,17 @@
 
 <script>
 import Homeheader from "../components/HomeHeader";
+import Postlist from "../components/PostList";
 export default {
   components: {
     Homeheader,
+    Postlist,
   },
   data() {
     return {
       content: [],
       active: "",
+      Postlist: [],
     };
   },
   created() {
@@ -46,16 +44,25 @@ export default {
       });
       console.log(this.content);
     });
-    this.$axios({
-      mesthod: "post",
-      url: "/post",
-    }).then((res) => {
-      console.log(res);
-    });
+    this.LoadPage();
   },
   methods: {
+    // 文章列表渲染
+    LoadPage(params) {
+      this.$axios({
+        url: "/post",
+        params,
+      }).then((res) => {
+        console.log(res);
+        this.Postlist = res.data.data;
+      });
+    },
     setSelect(name, title) {
-      console.log(name);
+      // console.log(name);
+      const params = {
+        category: name,
+      };
+      this.LoadPage(params);
     },
   },
 };
