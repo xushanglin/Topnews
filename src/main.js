@@ -54,6 +54,14 @@ axios.interceptors.response.use(res => {
   return res;
 })
 
+// 过滤器，判断图片路劲
+Vue.filter("fixImgUrl", (oldUrl) => {
+  if (oldUrl.indexOf("http") > -1) {
+    return oldUrl
+  } else {
+    return axios.defaults.baseURL + oldUrl
+  }
+})
 
 // 绑定到原型
 Vue.prototype.$axios = axios;
