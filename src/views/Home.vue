@@ -10,9 +10,13 @@
         :name="item.id"
         :key="index"
       >
-        <Postlist v-for="post in Postlist" :key="post.id" :post="post" />
+        <Postlist
+          @click.native="setDetails(post.id)"
+          v-for="post in Postlist"
+          :key="post.id"
+          :post="post"
+        />
       </van-tab>
-      <span class="iconfont iconjiantou1"></span>
     </van-tabs>
   </div>
 </template>
@@ -64,6 +68,11 @@ export default {
       };
       this.LoadPage(params);
     },
+    // 跳转详情页
+    setDetails(id) {
+      sessionStorage.setItem("id", id);
+      this.$router.push("/details");
+    },
   },
 };
 </script>
@@ -83,19 +92,19 @@ export default {
       }
     }
   }
-  .iconjiantou1 {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 42/360 * 100vw;
-    height: 43/360 * 100vw;
-    background-color: #e4e4e4;
-    transform: rotate(90deg);
-    font-size: 25/360 * 100vw;
-    font-weight: 700;
-    line-height: 42/360 * 100vw;
-    text-align: center;
-    z-index: 999;
-  }
+  // .iconjiantou1 {
+  //   position: absolute;
+  //   top: 0;
+  //   right: 0;
+  //   width: 42/360 * 100vw;
+  //   height: 43/360 * 100vw;
+  //   background-color: #e4e4e4;
+  //   transform: rotate(90deg);
+  //   font-size: 25/360 * 100vw;
+  //   font-weight: 700;
+  //   line-height: 42/360 * 100vw;
+  //   text-align: center;
+  //   z-index: 999;
+  // }
 }
 </style>
