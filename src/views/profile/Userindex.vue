@@ -1,36 +1,41 @@
 <template>
-  <div class="content">
-    <div class="user" @click="goEdit">
-      <div class="user-logo">
-        <img v-if="src" :src="'http://157.122.54.189:9083' + src" />
-        <img v-else src="@/assets/logo.png" alt="" />
-      </div>
-      <div class="message">
-        <div>
-          <p>
-            <span v-if="gender === 1" class="iconfont iconxingbienan"></span>
-            <span v-else class="iconfont iconxingbienv"></span>
-            <i>{{ nickname }}</i>
-          </p>
-          <em>2019-10-10</em>
+  <div>
+    <div class="content">
+      <Header text="我的" />
+      <div class="user" @click="goEdit">
+        <div class="user-logo">
+          <img v-if="src" :src="'http://157.122.54.189:9083' + src" />
+          <img v-else src="@/assets/logo.png" alt="" />
         </div>
-        <div class="arrows"><span class="iconfont iconjiantou1"></span></div>
+        <div class="message">
+          <div>
+            <p>
+              <span v-if="gender === 1" class="iconfont iconxingbienan"></span>
+              <span v-else class="iconfont iconxingbienv"></span>
+              <i>{{ nickname }}</i>
+            </p>
+            <em>2019-10-10</em>
+          </div>
+          <div class="arrows"><span class="iconfont iconjiantou1"></span></div>
+        </div>
       </div>
+      <!-- 条形框 -->
+      <Bartype title="我的关注" msg="关注的用户" @click.native="getGz" />
+      <Bartype title="我的跟帖" msg="跟帖/回复" @click.native="getComments" />
+      <Bartype title="我的收藏" msg="文章/视频" @click.native="getStar" />
+      <Bartype title="设置" />
+      <Bartype title="退出" @click.native="logOut" />
     </div>
-    <!-- 条形框 -->
-    <Bartype title="我的关注" msg="关注的用户" @click.native="getGz" />
-    <Bartype title="我的跟帖" msg="跟帖/回复" @click.native="getComments" />
-    <Bartype title="我的收藏" msg="文章/视频" @click.native="getStar" />
-    <Bartype title="设置" />
-    <Bartype title="退出" @click.native="logOut" />
   </div>
 </template>
 
 <script>
+import Header from "../../components/Header";
 import Bartype from "@/components/Bar-Type";
 export default {
   components: {
     Bartype,
+    Header,
   },
   data() {
     return {
