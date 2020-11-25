@@ -13,19 +13,7 @@
     <div class="details">
       <div class="title">{{ details.title }}</div>
       <div class="info">{{ details.user.nickname }} 2019-10-10</div>
-      <div
-        class="content"
-        v-if="details.type == 1"
-        v-html="details.content"
-      ></div>
-      <div class="content" v-else>
-        <video
-          controls
-          width="340/360 * 100vw"
-          autoplay
-          :src="details.content"
-        ></video>
-      </div>
+      <div class="content" v-html="details.content"></div>
       <div class="icon">
         <div class="dianzan" @click="getLike">
           <span
@@ -38,11 +26,16 @@
         <div class="weixin"><span class="iconfont iconweixin"></span>微信</div>
       </div>
     </div>
+    <sendComment @star="getStar" />
   </div>
 </template>
 
 <script>
+import sendComment from "../../components/sendComment";
 export default {
+  components: {
+    sendComment,
+  },
   data() {
     return {
       details: {},
@@ -94,7 +87,15 @@ export default {
         this.Loadpage();
       });
     },
-    getComments() {},
+    // 收藏
+    getStar() {
+      this.$axios({
+        url: "/post_star/" + this.details.id,
+      }).then((res) => {
+        console.log(res);
+        this.$toast(res.data.message);
+      });
+    },
   },
 };
 </script>
@@ -142,12 +143,12 @@ export default {
     font-size: 13/360 * 100vw;
     color: #868686;
   }
-  .content {
+  /deep/.content {
     margin: 10/360 * 100vw 0;
     font-size: 14/360 * 100vw;
     color: #333;
-    /deep/ img {
-      width: 330/360 * 100vw;
+    img {
+      width: 100%;
       // height: 340/360 * 100vw;
       object-fit: cover;
     }
@@ -158,6 +159,7 @@ export default {
     margin: 30/360 * 100vw 0 20/360 * 100vw;
     div {
       display: block;
+      // padding: 0 30/360 * 100vw;
       width: 79/360 * 100vw;
       height: 29/360 * 100vw;
       border: 1px solid #e4e4e4;

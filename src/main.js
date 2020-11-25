@@ -8,10 +8,11 @@ import Vant, {
 } from 'vant'
 import {
   Tab,
-  Tabs
+  Tabs,
+  List
 } from 'vant';
 Vue.use(Tab);
-Vue.use(Tabs);
+Vue.use(Tabs, List);
 // 组件库css文件
 import 'vant/lib/index.css'
 
