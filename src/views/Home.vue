@@ -11,16 +11,15 @@
       >
         <van-list
           v-model="category.loading"
-          :immediate-check="false"
           :finished="category.finished"
-          finished-text="我是有底线的"
-          @load="loadMore"
+          finished-text="没有更多了"
+          @load="onLoad"
         >
           <Postlist
             v-for="post in category.Postlist"
             :key="post.id"
             :post="post"
-            @click.native="setDetails(post.id)"
+            @click.native="goDetails(post.id)"
           />
         </van-list>
       </van-tab>
@@ -38,84 +37,85 @@ export default {
   },
   data() {
     return {
-      // 栏目得激活下标，从0开始
       activeIndex: 0,
       categoryList: [],
-      // 加载状态
-      // loading: false,
     };
   },
+  // 获取栏目列表
   created() {
     this.$axios({
       url: "/category",
     }).then((res) => {
-      // console.log(res.data.data);
-      // 给每个栏目添加一个空数组，用于存放对应的文章列表
-      this.categoryList = res.data.data.map((item) => {
+      console.log(res.data);
+      // 去重，把重复的列表去掉
+      let mycategory = new Set();
+      res.data.data.forEach((element) => {
+        if (!mycategory.has(element.name)) {
+          mycategory.add(element.name);
+          this.categoryList.push(element);
+        }
+      });
+      this.categoryList = this.categoryList.map((item) => {
+        // 一定要用return
         return {
-          // ...item相当于{id: ,name:  , is_top:}去掉花括号再把postlist[]进行拼接成一个对象
           ...item,
+          // 给每个栏目列表添加一个空数组存放栏目文章
           Postlist: [],
-          // 添加每页长度和页数
+          // 添加页码和每页显示条数
           pageIndex: 1,
           pageSize: 5,
+          // lis插件属性
           loading: false,
           finished: false,
         };
       });
       console.log(this.categoryList);
-      this.LoadPage();
+      this.loadPage();
     });
   },
-  // 监听事件监听栏目得激活状态
+  // 监听事件，监听activeIndex的变化添加文章列表
   watch: {
     activeIndex() {
-      // console.log(this.activeIndex);监听下标得变化情况
-      // 根据点击的栏目下标获取对应的栏目
-      const currenCategory = this.categoryList[this.activeIndex];
-      // console.log(currenCategory);
-      // 判断对应栏目里面的postlist里面有没有东西，有就不用请求，没有就请求
-      // 避免多次请求数据
-      if (currenCategory.Postlist.length == 0) {
-        this.LoadPage();
+      // 优化：如果栏目已经请求到数据了，在点就不用再请求
+      // 当current.Postlist的长度大于0就表示已经请求过了，不用再请求一次
+      const current = this.categoryList[this.activeIndex];
+      if (current.Postlist.length == 0) {
+        this.loadPage();
       }
     },
   },
   methods: {
-    loadMore() {
-      // this.loading = true;
-      // 拖动获取下一页数据
-      const currenCategory = this.categoryList[this.activeIndex];
-      currenCategory.pageIndex += 1;
-      this.LoadPage();
+    // 翻页请求
+    onLoad() {
+      // 在本来的页码上加一
+      const current = this.categoryList[this.activeIndex];
+      current.pageIndex += 1;
+      this.loadPage();
     },
-    // 文章列表渲染
-    LoadPage() {
-      const currenCategory = this.categoryList[this.activeIndex];
+    // 请求文章列表
+    loadPage() {
+      // 根据列表的索引获取对应的文章
+      const current = this.categoryList[this.activeIndex];
       this.$axios({
         url: "/post",
         params: {
-          // 根据点击的下标获取对应的id和文章
-          category: currenCategory.id,
-          pageIndex: currenCategory.pageIndex,
-          pageSize: currenCategory.pageSize,
+          category: current.id,
+          pageIndex: current.pageIndex,
+          pageSize: current.pageSize,
         },
       }).then((res) => {
         console.log(res);
-        // 把对应的文章放进对应的栏目中，进行滑动时加载数据把前面加载完的数据页拼接起来
-        currenCategory.Postlist = [
-          ...currenCategory.Postlist,
-          ...res.data.data,
-        ];
-        currenCategory.loading = false;
-        // 如果拖到底部返回的数据小于每页的长度，证明已经没有数据了，就停止加载
-        if (res.data.data.length < currenCategory.pageSize) {
-          currenCategory.finished = true;
+        // 把获取来的文章放进对应的栏目管理中
+        // 如果页数增多，前面的数据不应该被覆盖
+        current.Postlist = [...current.Postlist, ...res.data.data];
+        // 请求完数据之后停止加载
+        current.loading = false;
+        if (res.data.data.length < current.pageIndex) {
+          current.finished = true;
         }
       });
     },
-    // 跳转详情页
-    setDetails(id) {
+    goDetails(id) {
       sessionStorage.setItem("id", id);
       this.$router.push("/details");
     },
