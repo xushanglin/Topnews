@@ -240,7 +240,7 @@ export default {
 .iconBtn {
   display: flex;
   justify-content: space-evenly;
-  margin: 30/360 * 100vw 0 20/360 * 100vw;
+  margin: 30/360 * 100vw 0 80/360 * 100vw;
   div {
     display: block;
     // padding: 0 30/360 * 100vw;

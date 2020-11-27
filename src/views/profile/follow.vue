@@ -66,6 +66,7 @@ export default {
   }
   .message {
     margin-left: -70/360 * 100vw;
+    // flex-grow: 1;
     p {
       font-size: 16/360 * 100vw;
     }
