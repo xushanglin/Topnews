@@ -45,7 +45,7 @@
       <div class="title">{{ details.title }}</div>
     </div>
     <div class="iconBtn">
-      <div class="dianzan" @click="getLike">
+      <div class="dianzan" @click="goLike">
         <span
           class="iconfont icondianzan"
           :class="{ active: details.has_like }"
@@ -103,13 +103,22 @@ export default {
       }
     },
     // 点赞事件
+    goLike() {
+      if (this.details.has_like == false) {
+        this.getLike();
+        this.details.has_like = true;
+        this.details.like_length++;
+      } else {
+        this.getLike();
+        this.details.has_like = false;
+        this.details.like_length--;
+      }
+    },
     getLike() {
-      // if(){}
       this.$axios({
         url: "/post_like/" + this.details.id,
       }).then((res) => {
         this.$toast(res.data.message);
-        this.Loadpage();
       });
     },
     // 收藏
