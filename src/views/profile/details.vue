@@ -48,7 +48,7 @@ export default {
   methods: {
     Loadpage() {
       this.$axios({
-        url: "/post/" + sessionStorage.getItem("id"),
+        url: "/post/" + this.$route.params.id,
       }).then((res) => {
         console.log(res);
         this.details = res.data.data;

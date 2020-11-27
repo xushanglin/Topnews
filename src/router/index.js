@@ -65,7 +65,7 @@ const routes = [{
     component: Test
   },
   {
-    path: "/details",
+    path: "/details/:id",
     component: Details
   }
 ]

@@ -116,8 +116,7 @@ export default {
       });
     },
     goDetails(id) {
-      sessionStorage.setItem("id", id);
-      this.$router.push("/details");
+      this.$router.push("/details/" + id);
     },
   },
 };
