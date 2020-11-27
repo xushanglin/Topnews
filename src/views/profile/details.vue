@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 图片新闻 -->
-    <div class="nomalPost">
+    <div class="nomalPost" v-if="details.type == 1">
       <div class="topnav">
         <div class="icon">
           <span class="iconfont iconjiantou2" @click="$router.back()"></span>
@@ -16,23 +16,35 @@
         </div>
       </div>
       <div class="details">
-        <!-- 图片文章 -->
-        <div class="img" v-if="details.type == 1">
+        <div class="img">
           <div class="title">{{ details.title }}</div>
           <div class="info">{{ details.user.nickname }} 2019-10-10</div>
           <div class="content" v-html="details.content"></div>
         </div>
-        <!-- 视频文章 -->
-        <!-- <div class="video">
-        <video :src="details.content"></video>
-      </div> -->
       </div>
     </div>
     <!-- 视频新闻 -->
-    <div class="videoNews">
-      <video src=""></video>
+    <div class="videoNews" v-if="details.type == 2">
+      <video controls :src="details.content"></video>
+      <div class="user">
+        <div class="info">
+          <img
+            :src="$axios.defaults.baseURL + details.user.head_img"
+            class="logo"
+          />
+          <div class="nickname">11222</div>
+        </div>
+        <div
+          @click="goStar"
+          class="button"
+          :class="{ active: details.has_follow }"
+        >
+          {{ details.has_follow ? "已关注" : "关注" }}
+        </div>
+      </div>
+      <div class="title">{{ details.title }}</div>
     </div>
-    <div class="icon">
+    <div class="iconBtn">
       <div class="dianzan" @click="getLike">
         <span
           class="iconfont icondianzan"
@@ -79,27 +91,20 @@ export default {
     // 关注按钮
     goStar() {
       if (this.details.has_follow == false) {
-        this.getFollow();
+        this.$axios({
+          url: "/user_follows/" + this.details.user.id,
+        });
         this.details.has_follow = true;
       } else {
-        this.getUnfollow();
+        this.$axios({
+          url: "/user_unfollow/" + this.details.user.id,
+        });
         this.details.has_follow = false;
       }
     },
-    //   关注事件
-    getFollow() {
-      this.$axios({
-        url: "/user_follows/" + this.details.user.id,
-      }).then((res) => {});
-    },
-    // 取消关注
-    getUnfollow() {
-      this.$axios({
-        url: "/user_unfollow/" + this.details.user.id,
-      }).then((res) => {});
-    },
     // 点赞事件
     getLike() {
+      // if(){}
       this.$axios({
         url: "/post_like/" + this.details.id,
       }).then((res) => {
@@ -177,7 +182,53 @@ export default {
   }
 }
 
-.icon {
+.videoNews {
+  video {
+    width: 100%;
+  }
+  .user {
+    padding: 16/360 * 100vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .info {
+      display: flex;
+      align-items: center;
+      .logo {
+        width: 30/360 * 100vw;
+        height: 30/360 * 100vw;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .nickname {
+        font-size: 13/360 * 100vw;
+        color: #888;
+        padding-left: 10/360 * 100vw;
+      }
+    }
+    .button {
+      width: 62/360 * 100vw;
+      height: 26/360 * 100vw;
+      background-color: #ff0000;
+      border-radius: 13/360 * 100vw;
+      font-size: 12/360 * 100vw;
+      text-align: center;
+      line-height: 26/360 * 100vw;
+      color: #fff;
+    }
+    .active {
+      background-color: #f2f2f2;
+      color: #333;
+    }
+  }
+  .title {
+    padding: 16/360 * 100vw;
+    padding-top: 20/360 * 100vw;
+    font-size: 16/360 * 100vw;
+    color: #333;
+  }
+}
+.iconBtn {
   display: flex;
   justify-content: space-evenly;
   margin: 30/360 * 100vw 0 20/360 * 100vw;
