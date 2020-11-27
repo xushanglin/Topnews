@@ -1,7 +1,12 @@
 <template>
   <div class="content">
     <Header text="我的收藏" />
-    <Postlist v-for="post in Postlist" :key="post.id" :post="post" />
+    <Postlist
+      v-for="post in Postlist"
+      :key="post.id"
+      :post="post"
+      @click.native="goDetails(post.id)"
+    />
   </div>
 </template>
 
@@ -25,6 +30,12 @@ export default {
       console.log(res);
       this.Postlist = res.data.data;
     });
+  },
+  methods: {
+    // 详情
+    goDetails(id) {
+      this.$router.push("/details/" + id);
+    },
   },
   mounted() {
     this.$axios({
