@@ -55,20 +55,31 @@
       </div>
       <div class="weixin"><span class="iconfont iconweixin"></span>微信</div>
     </div>
-    <sendComment @star="getStar" />
+    <div>
+      <h2>精彩跟帖</h2>
+      <Maincomment
+        v-for="comment in commentList"
+        :key="comment.id"
+        :commentData="comment"
+      />
+      <sendComment @star="getStar" />
+    </div>
   </div>
 </template>
 
 <script>
 import sendComment from "../../components/sendComment";
+import Maincomment from "../../components/Maincomment";
 export default {
   components: {
     sendComment,
+    Maincomment,
   },
   data() {
     return {
       details: {},
       userid: "",
+      commentList: {},
     };
   },
   created() {
@@ -85,6 +96,7 @@ export default {
           url: "/post_comment/" + this.details.id,
         }).then((res) => {
           console.log(res);
+          this.commentList = res.data.data;
         });
       });
     },
@@ -134,7 +146,10 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
+body {
+  background-color: #f2f2f2;
+}
 .nomalPost {
   .topnav {
     padding: 16/360 * 100vw;
@@ -240,7 +255,8 @@ export default {
 .iconBtn {
   display: flex;
   justify-content: space-evenly;
-  margin: 30/360 * 100vw 0 80/360 * 100vw;
+  padding: 30/360 * 100vw 0 30/360 * 100vw;
+  border-bottom: 3/360 * 100vw solid #e4e4e4;
   div {
     display: block;
     // padding: 0 30/360 * 100vw;
@@ -262,5 +278,10 @@ export default {
       color: #01c801;
     }
   }
+}
+h2 {
+  margin-top: 20/360 * 100vw;
+  text-align: center;
+  font-weight: normal;
 }
 </style>
