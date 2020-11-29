@@ -11,6 +11,7 @@ import Edituser from '../views/profile/Edituser.vue'
 import UserStar from '../views/profile/userStar.vue'
 import Test from '../views/Test.vue'
 import Details from '../views/profile/details.vue'
+import Search from '../views/profile/search.vue'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -67,6 +68,10 @@ const routes = [{
   {
     path: "/details/:id",
     component: Details
+  },
+  {
+    path: "/search",
+    component: Search
   }
 ]
 
