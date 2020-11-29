@@ -2,7 +2,7 @@
   <header>
     <!-- logo -->
     <span class="iconfont iconnew"></span>
-    <div class="input">
+    <div class="input" @click="getSearch">
       <span class="iconfont iconsearch"></span>
       <em>搜索新闻</em>
     </div>
@@ -14,7 +14,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    getSearch() {
+      this.$router.push("/search");
+    },
+  },
+};
 </script>
 <style lang="less" scoped>
 header {
