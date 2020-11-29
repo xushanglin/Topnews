@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="topNav">
-      <span class="iconfont iconjiantou2" @click="$router.back()"></span>
+      <span class="iconfont iconjiantou2" @click="back()"></span>
       <div class="search">
         <input
           type="text"
@@ -10,12 +10,18 @@
           @keyup.enter="search()"
         />
       </div>
-      <div class="button">搜索</div>
+      <div class="button" @click="search">搜索</div>
     </div>
     <div class="history" v-if="Postlist.length == 0">
       <div class="tip">历史记录</div>
       <ul>
-        <li v-for="list in historyList" :key="list.index">{{ list }}</li>
+        <li
+          v-for="list in historyList"
+          :key="list.index"
+          @click="handHistorylist(list)"
+        >
+          {{ list }}
+        </li>
       </ul>
     </div>
     <Postlist v-for="post in Postlist" :key="post.id" :post="post" />
@@ -43,7 +49,7 @@ export default {
     }
   },
   watch: {
-    Postlist() {
+    record() {
       if (this.record == "") {
         this.Postlist = [];
       }
@@ -56,19 +62,36 @@ export default {
   },
   methods: {
     search() {
-      if (this.historyList.indexOf(this.record) == -1 && this.record != "") {
-        // 如果历史记录没有这条记录，给他添加
-        this.historyList.unshift(this.record);
+      if (this.record != "") {
+        if (this.historyList.indexOf(this.record) == -1) {
+          // 如果历史记录没有这条记录，给他添加
+          this.historyList.unshift(this.record);
+        }
+        this.$axios({
+          url: "/post_search",
+          params: {
+            keyword: this.record,
+          },
+        }).then((res) => {
+          this.Postlist = res.data.data;
+          console.log(this.Postlist);
+        });
       }
-      this.$axios({
-        url: "/post_search",
-        params: {
-          keyword: this.record,
-        },
-      }).then((res) => {
-        this.Postlist = res.data.data;
-        console.log(this.Postlist);
-      });
+    },
+    back() {
+      if (this.Postlist.length > 0) {
+        // 返回搜索建议
+        this.record = "";
+        this.Postlist = [];
+      } else {
+        this.$router.back();
+      }
+    },
+    // 点击历史记录
+    handHistorylist(li) {
+      console.log(li);
+      this.record = li;
+      this.search();
     },
   },
 };
