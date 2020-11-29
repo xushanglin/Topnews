@@ -7,26 +7,32 @@
           type="text"
           v-model="record"
           placeholder="给你好看得"
-          @keyup.enter="gogogo()"
+          @keyup.enter="search()"
         />
       </div>
       <div class="button">搜索</div>
     </div>
-    <div class="history">
+    <div class="history" v-if="Postlist.length == 0">
       <div class="tip">历史记录</div>
       <ul>
         <li v-for="list in historyList" :key="list.index">{{ list }}</li>
       </ul>
     </div>
+    <Postlist v-for="post in Postlist" :key="post.id" :post="post" />
   </div>
 </template>
 
 <script>
+import Postlist from "../../components/PostList";
 export default {
+  components: {
+    Postlist,
+  },
   data() {
     return {
       record: "",
       historyList: [],
+      Postlist: [],
     };
   },
   // 挂载好就显示历史记录
@@ -37,6 +43,11 @@ export default {
     }
   },
   watch: {
+    Postlist() {
+      if (this.record == "") {
+        this.Postlist = [];
+      }
+    },
     historyList() {
       // console.log(this.historyList);
       // 监听historyLIst的变化给他添加到本地
@@ -44,11 +55,20 @@ export default {
     },
   },
   methods: {
-    gogogo() {
-      if (this.historyList.indexOf(this.record) == -1) {
+    search() {
+      if (this.historyList.indexOf(this.record) == -1 && this.record != "") {
         // 如果历史记录没有这条记录，给他添加
         this.historyList.unshift(this.record);
       }
+      this.$axios({
+        url: "/post_search",
+        params: {
+          keyword: this.record,
+        },
+      }).then((res) => {
+        this.Postlist = res.data.data;
+        console.log(this.Postlist);
+      });
     },
   },
 };
