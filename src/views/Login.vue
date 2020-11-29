@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="btnClose">
-      <span class="iconfont iconicon-test"></span>
+      <span @click="close" class="iconfont iconicon-test"></span>
     </div>
 
     <div class="logo">
@@ -42,6 +42,9 @@ export default {
     };
   },
   methods: {
+    close() {
+      this.$router.push("/");
+    },
     getname(e) {
       this.username = e[0];
       // console.log(e[0], e[1]);
@@ -72,7 +75,8 @@ export default {
             localStorage.setItem("token", data.token);
             localStorage.setItem("userId", data.user.id);
             this.$toast.success(res.data.message);
-            window.location.href = "#/userindex";
+            // window.location.href = "#/userindex";
+            this.$router.replace("/");
           }
         });
       } else {
