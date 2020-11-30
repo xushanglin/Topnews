@@ -22,7 +22,7 @@ export default {
   border: 1px solid #ccc;
   border-radius: 6/360 * 100vw;
   padding: 4/360 * 100vw;
-  background-color: #ebedf0;
+  background-color: #e4e4e4;
   // opacity: 0.8;
   .parentinfo {
     display: flex;
@@ -31,6 +31,9 @@ export default {
       font-size: 14/360 * 100vw;
       color: #333;
       margin-right: 10/360 * 100vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .date {
       flex-grow: 1;
