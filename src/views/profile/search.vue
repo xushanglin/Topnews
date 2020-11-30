@@ -24,7 +24,17 @@
         </li>
       </ul>
     </div>
-    <Postlist v-for="post in Postlist" :key="post.id" :post="post" />
+    <!-- <Postlist v-for="post in Postlist" :key="post.id" :post="post" /> -->
+    <div
+      @click="details(post.id)"
+      class="list"
+      v-for="post in Postlist"
+      :key="post.id"
+    >
+      <span class="iconfont iconsearch"></span>
+      <div class="title">{{ post.title }}</div>
+      <span class="iconfont iconjiantou1"></span>
+    </div>
   </div>
 </template>
 
@@ -38,7 +48,7 @@ export default {
     return {
       record: "",
       historyList: [],
-      Postlist: [],
+      Postlist: "",
     };
   },
   // 挂载好就显示历史记录
@@ -61,6 +71,9 @@ export default {
     },
   },
   methods: {
+    details(id) {
+      this.$router.push("/details/" + id);
+    },
     search() {
       if (this.record != "") {
         if (this.historyList.indexOf(this.record) == -1) {
@@ -73,8 +86,12 @@ export default {
             keyword: this.record,
           },
         }).then((res) => {
-          this.Postlist = res.data.data;
-          console.log(this.Postlist);
+          if (res.data.data.length > 0) {
+            this.Postlist = { ...res.data.data };
+          } else {
+            this.$toast("找不到你想要得内容");
+            this.record = "";
+          }
         });
       }
     },
@@ -133,20 +150,38 @@ export default {
 .history {
   padding: 15/360 * 100vw;
   border-bottom: 1px solid #eee;
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    li {
+      width: 50%;
+      font-size: 13/360 * 100vw;
+      color: #333;
+      margin-top: 10/360 * 100vw;
+    }
+  }
 }
 .tip {
   font-weight: 700;
   font-size: 14/360 * 100vw;
   color: #333;
 }
-ul {
+
+.list {
   display: flex;
-  flex-wrap: wrap;
-  li {
-    width: 50%;
-    font-size: 13/360 * 100vw;
-    color: #333;
-    margin-top: 10/360 * 100vw;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 15/360 * 100vw;
+  padding: 10/360 * 100vw 0;
+  font-size: 14/360 * 100vw;
+  color: #333;
+  border-bottom: 1px solid #ccc;
+  .title {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    // whitewhite-space: nowrap;
   }
 }
 </style>
