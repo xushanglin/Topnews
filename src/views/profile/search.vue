@@ -14,7 +14,7 @@
     </div>
     <div class="history" v-if="Postlist.length == 0">
       <div class="tip">历史记录</div>
-      <ul>
+      <ul v-if="historyList.length">
         <li
           v-for="list in historyList"
           :key="list.index"
@@ -48,7 +48,7 @@ export default {
     return {
       record: "",
       historyList: [],
-      Postlist: "",
+      Postlist: [],
     };
   },
   // 挂载好就显示历史记录
