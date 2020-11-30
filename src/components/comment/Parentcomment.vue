@@ -22,6 +22,8 @@ export default {
   border: 1px solid #ccc;
   border-radius: 6/360 * 100vw;
   padding: 4/360 * 100vw;
+  background-color: #ebedf0;
+  // opacity: 0.8;
   .parentinfo {
     display: flex;
     align-items: center;

@@ -62,7 +62,12 @@
         :key="comment.id"
         :commentData="comment"
       />
-      <div class="morecomment">更多跟帖</div>
+      <div
+        class="morecomment"
+        @click="$router.push('/morecomments/' + $route.params.id)"
+      >
+        更多跟帖
+      </div>
     </div>
     <div class="maincomment" v-else>
       <h2>精彩跟帖</h2>
