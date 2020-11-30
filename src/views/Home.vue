@@ -110,7 +110,7 @@ export default {
         current.Postlist = [...current.Postlist, ...res.data.data];
         // 请求完数据之后停止加载
         current.loading = false;
-        if (res.data.data.length < current.pageIndex) {
+        if (res.data.data.length < current.pageSize) {
           current.finished = true;
         }
       });
