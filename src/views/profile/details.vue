@@ -55,21 +55,26 @@
       </div>
       <div class="weixin"><span class="iconfont iconweixin"></span>微信</div>
     </div>
-    <div>
+    <div class="maincomment" v-if="commentList.length > 0">
       <h2>精彩跟帖</h2>
       <Maincomment
         v-for="comment in commentList"
         :key="comment.id"
         :commentData="comment"
       />
-      <sendComment @star="getStar" />
+      <div class="morecomment">更多跟帖</div>
     </div>
+    <div class="maincomment" v-else>
+      <h2>精彩跟帖</h2>
+      <span>暂无跟帖，抢占沙发</span>
+    </div>
+    <sendComment @star="getStar" />
   </div>
 </template>
 
 <script>
 import sendComment from "../../components/sendComment";
-import Maincomment from "../../components/Maincomment";
+import Maincomment from "../../components/comment/Maincomment";
 export default {
   components: {
     sendComment,
@@ -94,6 +99,10 @@ export default {
         this.details = res.data.data;
         this.$axios({
           url: "/post_comment/" + this.details.id,
+          params: {
+            pageIndex: 1,
+            pageSize: 3,
+          },
         }).then((res) => {
           console.log(res);
           this.commentList = res.data.data;
@@ -279,9 +288,29 @@ body {
     }
   }
 }
-h2 {
-  margin-top: 20/360 * 100vw;
-  text-align: center;
-  font-weight: normal;
+.maincomment {
+  margin-bottom: 120/360 * 100vw;
+  span {
+    text-align: center;
+    display: block;
+    // margin: 30/360 * 100vw auto;
+    margin-top: 20/360 * 100vw;
+    font-size: 16/360 * 100vw;
+    color: #888;
+  }
+  h2 {
+    margin-top: 20/360 * 100vw;
+    color: #333;
+    text-align: center;
+    font-weight: normal;
+  }
+  .morecomment {
+    text-align: center;
+    height: 30/360 * 100vw;
+    width: 120/360 * 100vw;
+    border: 1px solid #ccc;
+    border-radius: 15/360 * 100vw;
+    margin: 30/360 * 100vw auto;
+  }
 }
 </style>
