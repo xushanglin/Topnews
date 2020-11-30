@@ -69,7 +69,11 @@ export default {
     // padding: 10/360 * 100vw;
     margin-top: 15/360 * 100vw;
     font-size: 14/360 * 100vw;
+    width: 100%;
     color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 </style>

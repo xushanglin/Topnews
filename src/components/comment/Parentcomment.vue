@@ -4,7 +4,7 @@
     <div class="parentinfo">
       <div class="name">{{ comment.user.nickname }}</div>
       <div class="date">3小时前</div>
-      <div class="reply">回复</div>
+      <div class="reply" @click="callReply">回复</div>
     </div>
     <div class="parentComment">{{ comment.content }}</div>
   </div>
@@ -14,6 +14,9 @@
 export default {
   props: ["comment"],
   name: "Parentcomment",
+  methods: {
+    callReply() {},
+  },
 };
 </script>
 
@@ -50,6 +53,10 @@ export default {
     font-size: 14/360 * 100vw;
     color: #333;
     margin: 10/360 * 100vw;
+    // width: 280/360 * 100vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 </style>
