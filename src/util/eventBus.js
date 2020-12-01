@@ -2,4 +2,4 @@
 import Vue from 'vue'
 
 // 导出这个实例
-export default eventBus = new Vue()
+export default new Vue()

@@ -23,22 +23,43 @@
 </template>
 
 <script>
+import eventBus from "../util/eventBus";
 export default {
   data() {
     return {
       isactive: false,
       comment: "",
+      post: {},
+      parentid: "",
     };
+  },
+  mounted() {
+    // 在挂载完毕用
+    // $on来监听其他组件的请求事件
+    eventBus.$on("sendMsg", (id) => {
+      console.log("我点击回复评论触发了textarea框了");
+      this.showTextarea();
+      console.log(id);
+      this.parentid = id;
+    });
+  },
+  // 用事件总线必须有销毁监听的事件
+  // 用$off
+  destroyed() {
+    eventBus.$off("sendMsg");
   },
   methods: {
     showTextarea() {
       this.isactive = true;
+      // nexeTick()函数是等页面渲染完再执行事件
       this.$nextTick(() => {
         this.$refs.textarea.focus();
       });
     },
     hideTextarea() {
-      this.isactive = false;
+      setTimeout(() => {
+        this.isactive = false;
+      }, 100);
     },
     sendComment() {
       this.$axios({
@@ -46,17 +67,18 @@ export default {
         url: "/post_comment/" + this.$route.params.id,
         data: {
           content: this.comment,
+          parent_id: this.parentid,
         },
       }).then((res) => {
         // console.log(res);
         this.$toast.success(res.data.message);
+        this.$emit("reloadComment");
       });
     },
     getStar() {
       this.$axios({
         url: "/post_star/" + this.$route.params.id,
       }).then((res) => {
-        // console.log(res);
         this.$toast(res.data.message);
       });
     },
@@ -92,6 +114,9 @@ export default {
         outline: none;
         border: none;
       }
+    }
+    .active {
+      color: #d7ba7d;
     }
     .iconfont {
       font-size: 23/360 * 100vw;

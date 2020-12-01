@@ -4,18 +4,23 @@
     <div class="parentinfo">
       <div class="name">{{ comment.user.nickname }}</div>
       <div class="date">3小时前</div>
-      <div class="reply" @click="callReply">回复</div>
+      <div class="reply" @click="callReply()">回复</div>
     </div>
     <div class="parentComment">{{ comment.content }}</div>
   </div>
 </template>
 
 <script>
+import eventBus from "../../util/eventBus";
 export default {
   props: ["comment"],
   name: "Parentcomment",
   methods: {
-    callReply() {},
+    callReply() {
+      // 引入eventBus实例
+      // 并emit通知给这个vue实例
+      eventBus.$emit("sendMsg", this.comment.id);
+    },
   },
 };
 </script>

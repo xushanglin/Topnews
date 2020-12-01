@@ -73,7 +73,7 @@
       <h2>精彩跟帖</h2>
       <span>暂无跟帖，抢占沙发</span>
     </div>
-    <sendComment />
+    <sendComment @reloadComment="reloadComment" />
   </div>
 </template>
 
@@ -94,6 +94,7 @@ export default {
   },
   created() {
     this.Loadpage();
+    this.reloadComment();
   },
   methods: {
     Loadpage() {
@@ -102,16 +103,18 @@ export default {
       }).then((res) => {
         console.log(res);
         this.details = res.data.data;
-        this.$axios({
-          url: "/post_comment/" + this.details.id,
-          params: {
-            pageIndex: 1,
-            pageSize: 3,
-          },
-        }).then((res) => {
-          console.log(res);
-          this.commentList = res.data.data;
-        });
+      });
+    },
+    reloadComment() {
+      this.$axios({
+        url: "/post_comment/" + this.$route.params.id,
+        params: {
+          pageIndex: 1,
+          pageSize: 3,
+        },
+      }).then((res) => {
+        console.log(res);
+        this.commentList = res.data.data;
       });
     },
     // 关注按钮
