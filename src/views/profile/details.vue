@@ -312,6 +312,7 @@ body {
   .morecomment {
     text-align: center;
     height: 30/360 * 100vw;
+    line-height: 30/360 * 100vw;
     width: 120/360 * 100vw;
     border: 1px solid #ccc;
     border-radius: 15/360 * 100vw;
