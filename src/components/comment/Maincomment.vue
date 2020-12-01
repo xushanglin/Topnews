@@ -3,10 +3,12 @@
     <div class="commentMain">
       <div class="info">
         <img
-          :src="$axios.defaults.baseURL + commentData.user.head_img"
+          v-if="commentData.user.head_img"
+          :src="commentData.user.head_img | fixImgUrl"
           alt=""
           class="logo"
         />
+        <img v-else src="../../assets/1.jpg" alt="" class="logo" />
         <div class="data">
           <div class="nickname">{{ commentData.user.nickname }}</div>
           <div class="time">2小时前</div>
