@@ -73,7 +73,7 @@
       <h2>精彩跟帖</h2>
       <span>暂无跟帖，抢占沙发</span>
     </div>
-    <sendComment @star="getStar" />
+    <sendComment />
   </div>
 </template>
 
@@ -148,14 +148,6 @@ export default {
       });
     },
     // 收藏
-    getStar() {
-      this.$axios({
-        url: "/post_star/" + this.details.id,
-      }).then((res) => {
-        // console.log(res);
-        this.$toast(res.data.message);
-      });
-    },
   },
 };
 </script>

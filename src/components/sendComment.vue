@@ -6,7 +6,7 @@
         <input type="text" @focus="showTextarea" placeholder="写跟帖" />
       </div>
       <span class="iconfont iconpinglun-"></span>
-      <span class="iconfont iconshoucang" @click="$emit('star')"></span>
+      <span class="iconfont iconshoucang" @click="getStar()"></span>
       <span class="iconfont iconfenxiang"></span>
     </div>
     <!-- 激活状态 -->
@@ -50,6 +50,14 @@ export default {
       }).then((res) => {
         // console.log(res);
         this.$toast.success(res.data.message);
+      });
+    },
+    getStar() {
+      this.$axios({
+        url: "/post_star/" + this.$route.params.id,
+      }).then((res) => {
+        // console.log(res);
+        this.$toast(res.data.message);
       });
     },
   },
