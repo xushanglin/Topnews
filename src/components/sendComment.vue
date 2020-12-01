@@ -133,6 +133,23 @@ export default {
       font-size: 23/360 * 100vw;
       margin-right: 18/360 * 100vw;
     }
+    .iconpinglun- {
+      position: relative;
+      &::after {
+        position: absolute;
+        top: -5/360 * 100vw;
+        left: 5/360 * 100vw;
+        content: "255";
+        // width: 20/360 * 100vw;
+        height: 16/360 * 100vw;
+        line-height: 16/360 * 100vw;
+        padding: 0 5/360 * 100vw;
+        font-size: 10/360 * 100vw;
+        color: #fff;
+        background-color: red;
+        border-radius: 13/360 * 100vw;
+      }
+    }
   }
   .enable {
     display: flex;
