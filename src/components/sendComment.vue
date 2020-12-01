@@ -21,6 +21,7 @@
         rows="3"
         @blur="hideTextarea"
         ref="textarea"
+        :placeholder="'回复:@' + nickname"
       ></textarea>
       <div class="send" @click="sendComment">发送</div>
     </div>
@@ -36,16 +37,18 @@ export default {
       comment: "",
       post: {},
       parentid: "",
+      nickname: "",
     };
   },
   mounted() {
     // 在挂载完毕用
     // $on来监听其他组件的请求事件
-    eventBus.$on("sendMsg", (id) => {
+    eventBus.$on("sendMsg", (id, name) => {
       console.log("我点击回复评论触发了textarea框了");
       this.showTextarea();
-      console.log(id);
+      // console.log(name);
       this.parentid = id;
+      this.nickname = name;
     });
   },
   // 用事件总线必须有销毁监听的事件
@@ -64,6 +67,7 @@ export default {
     hideTextarea() {
       setTimeout(() => {
         this.parentid = "";
+        this.nickname = "";
         this.isactive = false;
       }, 100);
     },

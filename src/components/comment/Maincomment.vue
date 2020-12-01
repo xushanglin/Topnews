@@ -29,7 +29,11 @@ export default {
   },
   methods: {
     callReply() {
-      eventBus.$emit("sendMsg", this.commentData.id);
+      eventBus.$emit(
+        "sendMsg",
+        this.commentData.id,
+        this.commentData.user.nickname
+      );
     },
   },
 };
