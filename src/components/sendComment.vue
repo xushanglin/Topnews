@@ -3,7 +3,12 @@
     <!-- 未激活状态 -->
     <div class="disable" v-if="!isactive">
       <div class="post">
-        <input type="text" @focus="showTextarea" placeholder="写跟帖" />
+        <input
+          type="text"
+          v-model="comment"
+          @focus="showTextarea"
+          placeholder="写跟帖"
+        />
       </div>
       <span class="iconfont iconpinglun-"></span>
       <span class="iconfont iconshoucang" @click="getStar()"></span>
@@ -58,6 +63,7 @@ export default {
     },
     hideTextarea() {
       setTimeout(() => {
+        this.parentid = "";
         this.isactive = false;
       }, 100);
     },
@@ -72,6 +78,7 @@ export default {
       }).then((res) => {
         // console.log(res);
         this.$toast.success(res.data.message);
+        this.comment = "";
         this.$emit("reloadComment");
       });
     },
