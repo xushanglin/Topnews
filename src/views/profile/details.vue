@@ -207,11 +207,11 @@ body {
       font-size: 13/360 * 100vw;
       color: #868686;
     }
-    /deep/.content {
+    .content {
       margin: 10/360 * 100vw 0;
       font-size: 14/360 * 100vw;
       color: #333;
-      img {
+      /deep/ img {
         width: 100%;
         // height: 340/360 * 100vw;
         object-fit: cover;
