@@ -24,8 +24,13 @@
         </li>
       </ul>
     </div>
-    <!-- <Postlist v-for="post in Postlist" :key="post.id" :post="post" /> -->
-    <div
+    <Postlist
+      @click.native="details(post.id)"
+      v-for="post in Postlist"
+      :key="post.id"
+      :post="post"
+    />
+    <!-- <div
       @click="details(post.id)"
       class="list"
       v-for="post in Postlist"
@@ -34,7 +39,7 @@
       <span class="iconfont iconsearch"></span>
       <div class="title">{{ post.title }}</div>
       <span class="iconfont iconjiantou1"></span>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -87,7 +92,7 @@ export default {
           },
         }).then((res) => {
           if (res.data.data.length > 0) {
-            this.Postlist = { ...res.data.data };
+            this.Postlist = res.data.data;
           } else {
             this.$toast("找不到你想要得内容");
             this.record = "";
