@@ -101,7 +101,7 @@ export default {
 .content {
   position: fixed;
   bottom: 0;
-  width: 100%;
+  width: 360/360 * 100vw;
   background-color: #f2f2f2;
   .disable {
     display: flex;
