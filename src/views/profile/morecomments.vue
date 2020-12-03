@@ -1,58 +1,37 @@
 <template>
   <div>
     <Header text="更多跟帖" />
-
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <Maincomment
-        v-for="comment in commentList"
-        :key="comment.id"
-        :commentData="comment"
-      />
-    </van-list>
+    <Maincomment
+      v-for="(comment, index) in commentList"
+      :key="index"
+      :commentData="comment"
+    />
+    <SendComment @reloadComment="loadPage()" />
   </div>
 </template>
 
 <script>
 import Header from "../../components/Header";
 import Maincomment from "../../components/comment/Maincomment";
+import SendComment from "../../components/sendComment";
 export default {
   data() {
     return {
       commentList: [],
-      pageIndex: 1,
-      pageSize: 5,
-      loading: false,
-      finished: false,
     };
   },
   components: {
     Header,
     Maincomment,
+    SendComment,
   },
   methods: {
-    onLoad() {
-      this.pageIndex++;
-      this.loadPage();
-    },
     loadPage() {
       this.$axios({
         url: "/post_comment/" + this.$route.params.id,
-        params: {
-          pageIndex: this.pageIndex,
-          pageSize: this.pageSize,
-        },
       }).then((res) => {
         //   console.log(res);
-        this.commentList = [...this.commentList, ...res.data.data];
-        this.loading = false;
-        if (res.data.data.length < this.pageSize) {
-          this.finished = true;
-        }
+        this.commentList = res.data.data;
       });
     },
   },
