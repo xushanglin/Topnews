@@ -74,8 +74,12 @@ export default {
       this.categoryList.splice(index, 1);
     },
     active(index) {
-      this.categoryList.push(this.historyList[index]);
-      this.historyList.splice(index, 1);
+      if (this.historyList.length == 1) {
+        return this.$toast("不能再删除了");
+      } else {
+        this.categoryList.push(this.historyList[index]);
+        this.historyList.splice(index, 1);
+      }
     },
   },
 };
