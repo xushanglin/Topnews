@@ -3,7 +3,7 @@
     <!-- 头部导航栏 -->
     <Homeheader />
     <!-- 栏目管理 -->
-    <van-tabs v-model="activeIndex" background="#e4e4e4">
+    <van-tabs v-model="activeIndex" background="#e4e4e4" sticky>
       <van-tab
         v-for="category in categoryList"
         :key="category.id"
@@ -43,18 +43,8 @@ export default {
   },
   // 获取栏目列表
   created() {
-    this.$axios({
-      url: "/category",
-    }).then((res) => {
-      console.log(res.data);
-      // 去重，把重复的列表去掉
-      let mycategory = new Set();
-      res.data.data.forEach((element) => {
-        if (!mycategory.has(element.name)) {
-          mycategory.add(element.name);
-          this.categoryList.push(element);
-        }
-      });
+    if (localStorage.getItem("historyList")) {
+      this.categoryList = JSON.parse(localStorage.getItem("historyList"));
       this.categoryList = this.categoryList.map((item) => {
         // 一定要用return
         return {
@@ -69,18 +59,54 @@ export default {
           finished: false,
         };
       });
-      console.log(this.categoryList);
+      this.categoryList.push({ name: "+" });
+    } else {
+      this.$axios({
+        url: "/category",
+      }).then((res) => {
+        console.log(res.data);
+        // 去重，把重复的列表去掉
+        let mycategory = new Set();
+        res.data.data.forEach((element) => {
+          if (!mycategory.has(element.name)) {
+            mycategory.add(element.name);
+            this.categoryList.push(element);
+          }
+        });
+
+        this.categoryList = this.categoryList.map((item) => {
+          // 一定要用return
+          return {
+            ...item,
+            // 给每个栏目列表添加一个空数组存放栏目文章
+            Postlist: [],
+            // 添加页码和每页显示条数
+            pageIndex: 1,
+            pageSize: 5,
+            // lis插件属性
+            loading: false,
+            finished: false,
+          };
+        });
+        this.categoryList.push({ name: "+" });
+      });
+
+      // console.log(this.categoryList);
       this.loadPage();
-    });
+    }
   },
   // 监听事件，监听activeIndex的变化添加文章列表
   watch: {
-    activeIndex() {
+    activeIndex(newValue) {
       // 优化：如果栏目已经请求到数据了，在点就不用再请求
       // 当current.Postlist的长度大于0就表示已经请求过了，不用再请求一次
-      const current = this.categoryList[this.activeIndex];
-      if (current.Postlist.length == 0) {
-        this.loadPage();
+      if (newValue == this.categoryList.length - 1) {
+        this.$router.push("/manage");
+      } else {
+        const current = this.categoryList[this.activeIndex];
+        if (current.Postlist.length == 0) {
+          this.loadPage();
+        }
       }
     },
   },
@@ -132,8 +158,12 @@ export default {
         font-size: 16/360 * 100vw;
         // line-height: 43/360 * 100vw;
       }
-      &:last-child {
-        margin-right: 42/360 * 100vw;
+      &:nth-last-child(2) {
+        background: #e4e4e4;
+        position: sticky;
+        right: -8px;
+        width: 44px;
+        line-height: 44px;
       }
     }
   }

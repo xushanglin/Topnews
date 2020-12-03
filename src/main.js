@@ -20,6 +20,7 @@ import 'vant/lib/index.css'
 import axios from 'axios'
 // 服务器基准路径
 axios.defaults.baseURL = "http://157.122.54.189:9083"
+// axios.defaults.baseURL = "http://liangwei.tech:3000"
 
 // 请求拦截器
 axios.interceptors.request.use(config => {

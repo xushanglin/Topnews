@@ -13,6 +13,8 @@ import Test from '../views/Test.vue'
 import Details from '../views/profile/details.vue'
 import Search from '../views/profile/search.vue'
 import Morecomments from '../views/profile/morecomments.vue'
+import Manage from '../views/manage.vue'
+
 Vue.use(VueRouter)
 
 const routes = [{
@@ -77,6 +79,10 @@ const routes = [{
   {
     path: "/morecomments/:id",
     component: Morecomments
+  },
+  {
+    path: "/manage",
+    component: Manage
   }
 ]
 
