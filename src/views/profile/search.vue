@@ -14,10 +14,10 @@
     </div>
     <div class="history" v-if="Postlist.length == 0">
       <div class="tip">历史记录</div>
-      <ul v-if="historyList.length">
+      <ul>
         <li
-          v-for="list in historyList"
-          :key="list.index"
+          v-for="(list,index) in $store.state.histroyList"
+          :key="index"
           @click="handHistorylist(list)"
         >
           {{ list }}
@@ -60,7 +60,8 @@ export default {
   created() {
     // 如果有就显示
     if (localStorage.getItem("history")) {
-      this.historyList = JSON.parse(localStorage.getItem("history"));
+    const oldHistory = JSON.parse(localStorage.getItem("history"));
+      this.$store.commit("reseverHistory",oldHistory)
     }
   },
   watch: {
@@ -69,11 +70,14 @@ export default {
         this.Postlist = [];
       }
     },
-    historyList() {
-      // console.log(this.historyList);
-      // 监听historyLIst的变化给他添加到本地
-      localStorage.setItem("history", JSON.stringify(this.historyList));
-    },
+    // historyList() {
+    //   // console.log(this.historyList);
+    //   // 监听historyLIst的变化给他添加到本地
+    //   localStorage.setItem("history", JSON.stringify(this.historyList));
+    // },
+    "$store.state.histroyList":function(){
+      localStorage.setItem("history",JSON.stringify(this.$store.state.histroyList))
+    }
   },
   methods: {
     details(id) {
@@ -81,10 +85,11 @@ export default {
     },
     search() {
       if (this.record != "") {
-        if (this.historyList.indexOf(this.record) == -1) {
-          // 如果历史记录没有这条记录，给他添加
-          this.historyList.unshift(this.record);
-        }
+        // if (this.historyList.indexOf(this.record) == -1) {
+        //   // 如果历史记录没有这条记录，给他添加
+        //   this.historyList.unshift(this.record);
+        // }
+        this.$store.commit("addHistroy",this.record)
         this.$axios({
           url: "/post_search",
           params: {

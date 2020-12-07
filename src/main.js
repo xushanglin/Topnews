@@ -1,6 +1,29 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+const store = new Vuex.Store({
+  state: {
+      // 存放历史记录
+    histroyList:[]
+  },
+  mutations: {
+    // 判断historyList中是否存在记录，没有就给推进去
+    // data为搜索页面传回来的参数
+    addHistroy(state,data) {
+      if (state.histroyList.indexOf(data) === -1) {
+        state.histroyList.unshift(data)
+      }
+    },
+    // 把保存在localstorage的数据赋值给historyList
+    reseverHistory(state,data) {
+      state.histroyList=data
+    }
+  }
+})
 
 // 导入组件库
 import Vant, {
@@ -74,6 +97,7 @@ Vue.use(Uploader, Dialog);
 
 Vue.config.productionTip = false
 new Vue({
+  store,
   router,
   render: function (h) {
     return h(App)
